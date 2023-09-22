@@ -5,7 +5,7 @@ class WiiPi:
     def __init__(self):
         if not self.connect():
             quit()
-       time.sleep(3)
+        time.sleep(3)
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = [0,0,0,0]
         self.rumble()
