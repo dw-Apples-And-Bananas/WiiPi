@@ -2,6 +2,12 @@ import time
 import cwiid
 import os
 
+class Button:
+    def __init__(self, ID:int, value:int=0, holdtime:int=-1):
+        self.ID = ID
+        self.value = value
+        self.holdtime = holdtime
+
 class WiiPi:
     def __init__(self):
         if not self.connect():
@@ -11,32 +17,38 @@ class WiiPi:
         self.leds = [0,0,0,0]
         self.rumble()
         self.buttons = {
-            "a": [cwiid.BTN_A, 0],
-            "b": [cwiid.BTN_B, 0],
-            "up": [cwiid.BTN_UP, 0],
-            "down": [cwiid.BTN_DOWN, 0],
-            "left": [cwiid.BTN_LEFT, 0],
-            "right": [cwiid.BTN_RIGHT, 0],
-            "plus": [cwiid.BTN_PLUS, 0],
-            "minus": [cwiid.BTN_MINUS, 0],
-            "home": [cwiid.BTN_HOME, 0],
-            "1": [cwiid.BTN_1, 0],
-            "2": [cwiid.BTN_2, 0]
+            "a": Button(cwiid.BTN_A),
+            "b": Button(cwiid.BTN_B),
+            "up": Button(cwiid.BTN_UP),
+            "down": Button(cwiid.BTN_DOWN),
+            "left": Button(cwiid.BTN_LEFT),
+            "right": Button(cwiid.BTN_RIGHT),
+            "plus": Button(cwiid.BTN_PLUS),
+            "minus": Button(cwiid.BTN_MINUS),
+            "home": Button(cwiid.BTN_HOME),
+            "1": Button(cwiid.BTN_1),
+            "2": Button(cwiid.BTN_2)
         }
 
     def update(self):
         btnState = self.wii.state["buttons"]
         for btn in self.buttons:
-            if (btnState & self.buttons[btn][0]):
-                if self.buttons[btn][1] == 0:
+            if (btnState & self.buttons[btn].ID:
+                if self.buttons[btn].value == 0:
                     self.button_pressed(btn)
-            elif self.buttons[btn][1] == 1:
+            elif self.buttons[btn].value == 1:
                 self.button_released(btn)
+            elif self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 1:
+                self.button_held(btn)
 
     def button_pressed(self, btn):
-        self.buttons[btn][1] = 1
+        self.buttons[btn].value = 1
+        self.buttons[btn].holdtime = time.time()
     def button_released(self, btn):
-        self.buttons[btn][1] = 0
+        self.buttons[btn].value = 0
+        self.buttons[btn].holdtime = -1
+    def button_held(self, btn):
+        self.buttons[btn].holdtime = -1
         
     def led(self, leds:list[int]):
         ids = {
