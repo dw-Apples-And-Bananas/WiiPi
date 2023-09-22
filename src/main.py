@@ -8,12 +8,12 @@ class Wii(WiiPi):
         super().__init__()
         self.update()
 
-    def A_pressed(self):
-        keyboard.type("A Pressed\n")
-        super().A_pressed()
-    def A_released(self):
-        keyboard.type("A Released\n\n")
-        super().A_released()
+    def button_pressed(self, btn):
+        keyboard.type(f"{btn} Pressed\n")
+        super().button_pressed()
+    def button_released(self, btn):
+        keyboard.type(f"{btn} Released\n\n")
+        super().button_released()
 
     def update(self):
         while True:
