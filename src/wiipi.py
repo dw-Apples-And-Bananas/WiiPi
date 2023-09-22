@@ -1,6 +1,6 @@
 import time
 import cwiid
-import os
+import os, sys
 
 class Button:
     def __init__(self, ID:int, value:int=0, holdtime:int=-1):
@@ -33,7 +33,7 @@ class WiiPi:
     def update(self):
         btnState = self.wii.state["buttons"]
         for btn in self.buttons:
-            if (btnState & self.buttons[btn].ID:
+            if (btnState & self.buttons[btn].ID):
                 if self.buttons[btn].value == 0:
                     self.button_pressed(btn)
             elif self.buttons[btn].value == 1:
