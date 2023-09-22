@@ -47,7 +47,7 @@ class WiiPi:
             self.configID = 1
         else:
             self.configID = ID
-        self.config = self.configs[str(ID)]
+        self.config = self.configs[str(self.configID)]
         self.led(self.config["led"])
 
     def run(self):
