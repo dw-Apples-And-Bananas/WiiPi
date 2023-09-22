@@ -1,5 +1,7 @@
 from wiipi import WiiPi
 import time
+from zero_hid import Keyboard
+keyboard = Keyboard()
 
 class Wii(WiiPi):
     def __init__(self):
@@ -7,10 +9,10 @@ class Wii(WiiPi):
         self.update()
 
     def A_pressed(self):
-        print("A Pressed")
+        keyboard.type("A Pressed\n")
         super().A_pressed()
     def A_released(self):
-        print("A Released")
+        keyboard.type("A Released\n")
         super().A_released()
 
     def update(self):
