@@ -4,6 +4,9 @@ import os, sys
 import json
 import threading
 
+from zero_hid import Keyboard, KeyCodes
+keyboard = Keyboard()
+
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Button:
@@ -13,6 +16,52 @@ class Button:
         self.holdtime = holdtime
         self.holding = True
 
+
+class Remap:
+    def __init__(self, wiipi):
+        self.argstr = ["button (mod): ", "modifiers | ", "key"]
+        self.argvar = ["", "", ""]
+        self.arg = 0
+        self.set(wiipi)
+        self.pos = 0 
+
+    def setup(self):
+        text = "".join(self.argstr)
+        keyboard.type(text)
+        self.pos = len(text)
+        self.select(0)
+        
+        
+    def select(self, arg):
+        self.arg = arg
+        length = 0
+        for i in range(arg):
+            length += self.argstr[i]
+        if length < self.pos:
+            for i in range(self.pos-length):
+                keyboard.press([], KeyCodes.KEY_LEFT)
+        else:
+            for i in range(length-self.pos):
+                keyboard.press([], KeyCodes.KEY_RIGHT)
+        for i in range(len(self.argstr[i]):
+            keyboard.press([Keycodes.MOD_LEFT_SHIFT], KeyCodes.Left)
+    
+    def released(self, btn):
+        if self.arg == 0:
+            self.argstr[0] = f"{btn} (tap):"
+            keyboard.type(self.argstr[0])
+
+    def set(self, wiipi):
+        self.configs = wiipi.configs
+        self.configID = wiipi.config
+        self.config = wiipi.config
+
+    def write(self):
+        self.configs[self.configID] = self.config 
+        with open(f"{DIR}/config.json", "w") as f:
+            json.dump(self.configs, f, indent=2)
+
+        
 class WiiPi:
     def __init__(self):
         if not self.connect():
@@ -37,10 +86,15 @@ class WiiPi:
             "1": Button(cwiid.BTN_1),
             "2": Button(cwiid.BTN_2)
         }
+        self.configID = 1
+        self.load_configs()
         self.remapping = False
+        self.remap = Remap(self)
+
+    def load_configs(self):
         with open(f"{DIR}/configs.json") as f:
             self.configs = json.load(f)
-        self.load_config(1)
+        self.load_config(self.configID)
 
     def load_config(self, ID):
         if ID < 1:
@@ -72,7 +126,6 @@ class WiiPi:
             time.sleep(0.01)
 
     def button_pressed(self, btn):
-        
         self.buttons[btn].value = 1
         self.buttons[btn].holdtime = time.time()
         
@@ -83,6 +136,8 @@ class WiiPi:
                     if btn == "a":
                         self.blink = self.leds
                         self.remapping = True
+                        self.remap.set(self)
+                        self.remap.setup()
                     elif btn == "minus":
                         self.hiddenleds = self.leds
                         self.led("0000")
@@ -96,6 +151,10 @@ class WiiPi:
             self.led(self.blink)
             self.blink = None
             self.remapping = False
+            self.remap.write()
+            self.load_configs()
+        else:
+            self.remap.released(btn)
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = False
