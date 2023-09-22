@@ -64,6 +64,11 @@ class WiiPi:
         self.buttons[btn].holdtime = -1
         
     def button_held(self, btn):
+        if btn == "home":
+            if self.configID < 4:
+                self.load_config(self.configID+1)
+            else:
+                self.load_config(1)
         self.buttons[btn].holdtime = -1
         
     def led(self, leds:list[int]):
