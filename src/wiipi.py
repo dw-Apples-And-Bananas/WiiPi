@@ -39,12 +39,14 @@ class Remap:
         for i in range(self.pos[1]):
             keyboard.press([], KeyCodes.KEY_LEFT)
         self.pos[1] = 0
+        time.sleep(0.1)
         if self.pos[0] > arg:
             for i in range(self.pos[0]-arg):
                 keyboard.press([], KeyCodes.KEY_UP)
         elif self.pos[0] < arg:
             for i in range(arg-self.pos[0]):
                 keyboard.press([], KeyCodes.KEY_DOWN)
+        time.sleep(0.1)
         if self.pos[1] < length:
             for i in range(length-self.pos[1]):
                 keyboard.press([], KeyCodes.KEY_RIGHT)
