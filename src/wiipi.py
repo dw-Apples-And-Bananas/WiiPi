@@ -90,7 +90,7 @@ class WiiPi:
             "0111": 14,
             "1111": 15
         }
-        wii.led = ids[leds]
+        self.wii.led = ids[leds]
         self.leds = leds
                                   
     def rumble(self, seconds:float=0.3):
