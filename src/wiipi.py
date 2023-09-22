@@ -1,8 +1,7 @@
 import time
 import cwiid
 
-class WiiPi:    
-    class Buttons:
+class WiiPi:
     def __init__(self):
         if not self.connect():
             quit()
