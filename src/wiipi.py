@@ -19,37 +19,39 @@ class Button:
 
 class Remap:
     def __init__(self, wiipi):
-        self.argstr = ["button (mod): ", "modifiers | ", "key"]
+        self.modifiers = ["gui", "control", "shift", "alt"]
+        self.modifier = -1
+        self.argstr = ["button: ", "modifiers: ", "key: "]
         self.argvar = ["", "", ""]
         self.arg = 0
         self.set(wiipi)
-        self.pos = 0 
+        self.pos = [0,0]
 
     def setup(self):
-        text = "".join(self.argstr)
+        text = "\n".join(self.argstr)
         keyboard.type(text)
-        self.pos = len(text)
+        self.pos = [len(self.argstr)-1, len(self.argstr[-1])
         self.select(0)
         
     def select(self, arg):
         self.arg = arg
-        pos = self.pos
-        length = 0
-        for i in range(arg+1):
-            length += len(self.argstr[i])
-        if length < self.pos:
-            for i in range(self.pos-length):
-                pos -= 1
+        length = len(self.argstr[arg])
+        if self.pos[0] > arg:
+            for i in range(self.pos[0]-arg):
+                keyboard.press([], KeyCodes.KEY_UP)
+        elif self.pos[0] < arg:
+            for i in range(arg-self.pos[0]):
+                keyboard.press([], KeyCodes.KEY_DOWN)
+        if self.pos[1] > length:
+            for i in range(self.pos[1]-length):
                 keyboard.press([], KeyCodes.KEY_LEFT)
-        else:
-            for i in range(length-self.pos):
-                pos += 1
+        elif self.pos[1] < length:
+            for i in range(length-self.pos[1]):
                 keyboard.press([], KeyCodes.KEY_RIGHT)
-        for i in range(len(self.argstr[arg])):
-            keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_LEFT)
-            pos += 1
-        self.pos = pos
-
+        for i in range(len(self.argvar[arg])):
+            keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
+        self.pos = [arg, length+len(self.argvar[arg]]
+    
     def back(self):
         if self.arg > 0:
             self.select(self.arg-1)
@@ -60,10 +62,15 @@ class Remap:
     
     def released(self, btn):
         if self.arg == 0:
-            self.argstr[0] = f"{btn} (tap): "
-            keyboard.type(self.argstr[0])
-            self.pos = len(self.argstr[0])
+            self.argvar[0] = btn
+            keyboard.type(self.argvar[0])
             self.next()
+        elif self.arg == 1:
+            if btn == "right":
+                self.modifier += 1
+                keyboard.type(self.modifiers[self.modifier])
+                self.pos += len(self.modifiers[self.modifier]
+                self.select(1)
 
     def set(self, wiipi):
         self.configs = wiipi.configs
