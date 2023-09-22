@@ -1,9 +1,20 @@
 from wiipi import WiiPi
 import time
 
-wii = WiiPi()
+class Wii(WiiPi):
+    def __init__(self):
+        super().__init__()
+        self.update()
 
-while True:
-  for i in range(5):
-    wii.led = i
-    time.sleep(1)
+    def A_pressed(self):
+        print("A Pressed")
+        super().A_pressed()
+    def A_released(self):
+        print("A Released")
+        super().A_released()
+
+    def update(self):
+        while True:
+            super().update()
+
+Wii()
