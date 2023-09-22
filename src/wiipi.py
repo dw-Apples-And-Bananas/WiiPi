@@ -43,7 +43,7 @@ class Remap:
             for i in range(length-self.pos):
                 keyboard.press([], KeyCodes.KEY_RIGHT)
         for i in range(len(self.argstr[arg])):
-            keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
+            keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_LEFT)
 
     def back(self):
         if self.arg > 0:
