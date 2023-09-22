@@ -9,35 +9,24 @@ class WiiPi:
         self.leds = [0,0,0,0]
         self.rumble()
         self.buttons = {
-            "a": [cwiid.BTN_A, 0],
-            "b": [cwiid.BTN_B, 0],
-            "up": [cwiid.BTN_UP, 0],
-            "down": [cwiid.BTN_DOWN, 0],
-            "left": [cwiid.BTN_LEFT, 0],
-            "right": [cwiid.BTN_RIGHT, 0],
-            "plus": [cwiid.BTN_PLUS, 0],
-            "minus": [cwiid.BTN_MINUS, 0],
-            "home": [cwiid.BTN_HOME, 0],
-            "1": [cwiid.BTN_1, 0],
-            "2": [cwiid.BTN_2, 0]
+            "a": [self.BTN_A, 0],
+            "b": [self.BTN_B, 0],
+            "up": [self.BTN_UP, 0],
+            "down": [self.BTN_DOWN, 0],
+            "left": [self.BTN_LEFT, 0],
+            "right": [self.BTN_RIGHT, 0],
+            "plus": [self.BTN_PLUS, 0],
+            "minus": [self.BTN_MINUS, 0],
+            "home": [self.BTN_HOME, 0],
+            "1": [self.BTN_1, 0],
+            "2": [self.BTN_2, 0]
         }
 
     def update(self):
-        self.buttons["a"][0] = cwiid.BTN_A
-        self.buttons["b"][0] = cwiid.BTN_B
-        self.buttons["up"][0] = cwiid.BTN_UP
-        self.buttons["down"][0] = cwiid.BTN_DOWN
-        self.buttons["left"][0] = cwiid.BTN_LEFT
-        self.buttons["right"][0] = cwiid.BTN_RIGHT
-        self.buttons["plus"][0] = cwiid.BTN_PLUS
-        self.buttons["minus"][0] = cwiid.BTN_MINUS
-        self.buttons["home"][0] = cwiid.BTN_HOME
-        self.buttons["1"][0] = cwiid.BTN_1
-        self.buttons["2"][0] = cwiid.BTN_2
         btnState = self.wii.state["buttons"]
         if btnState:
             for btn in self.buttons:
-                if self.buttons[btn][0] and self.buttons[btn][1] == 0:
+                if self.buttons[btn][0]() and self.buttons[btn][1] == 0:
                     self.button_pressed(btn)
         else:
             for btn in self.buttons:
@@ -48,6 +37,18 @@ class WiiPi:
         self.buttons[btn][1] = 1
     def button_released(self, btn):
         self.buttons[btn][1] = 0
+
+    def BTN_A(self): return cwiid.BTN_A
+    def BTN_B(self): return cwiid.BTN_B
+    def BTN_UP(self): return cwiid.BTN_UP
+    def BTN_DOWN(self): return cwiid.BTN_DOWN
+    def BTN_LEFT(self): return cwiid.BTN_LEFT
+    def BTN_RIGHT(self): return cwiid.BTN_RIGHT
+    def BTN_PLUS(self): return cwiid.BTN_PLUS
+    def BTN_MINUS(self): return cwiid.BTN_MINUS
+    def BTN_HOME(self): return cwiid.BTN_HOME
+    def BTN_1(self): return cwiid.BTN_1
+    def BTN_2(self): return cwiid.BTN_2
         
     def led(self, leds:list[int]):
         ids = {
