@@ -77,19 +77,19 @@ class WiiPi:
         self.buttons[btn].holdtime = time.time()
         
     def button_released(self, btn):
-        if not self.buttons[btn].holding:
-            if self.buttons["home"].holding:
-                if btn == "a":
-                    if self.remapping:
-                        self.blink = None
-                        self.remapping = False
-                    else:
+        if not self.remapping:
+            if not self.buttons[btn].holding:
+                if self.buttons["home"].holding:
+                    if btn == "a":
                         self.blink = self.leds
                         self.remapping = True
-                elif btn == "left":
-                    self.load_config(self.configID-1)
-                elif btn == "right":
-                    self.load_config(self.configID+1)
+                    elif btn == "left":
+                        self.load_config(self.configID-1)
+                    elif btn == "right":
+                        self.load_config(self.configID+1)
+        elif not self.buttons[btn].holding and self.buttons["home"].holding and btn == "a":
+            self.blink = self.leds
+            self.remapping = False
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = False
