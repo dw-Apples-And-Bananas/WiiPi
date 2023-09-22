@@ -48,8 +48,9 @@ class Remap:
     
     def released(self, btn):
         if self.arg == 0:
-            self.argstr[0] = f"{btn} (tap):"
+            self.argstr[0] = f"{btn} (tap): "
             keyboard.type(self.argstr[0])
+            self.select(0)
 
     def set(self, wiipi):
         self.configs = wiipi.configs
@@ -57,7 +58,7 @@ class Remap:
         self.config = wiipi.config
 
     def write(self):
-        self.configs[self.configID] = self.config 
+        self.configs[str(self.configID)] = self.config 
         with open(f"{DIR}/config.json", "w") as f:
             json.dump(self.configs, f, indent=2)
 
