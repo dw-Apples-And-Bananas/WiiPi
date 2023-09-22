@@ -13,7 +13,6 @@ class WiiPi:
         self.buttons = self.Buttons
 
     def update(self):
-        print(self.buttons.a)
         btnState = self.wii.state["buttons"]
         if btnState:
             if cwiid.BTN_A and self.buttons.a == 0:
