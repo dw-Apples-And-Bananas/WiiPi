@@ -10,7 +10,7 @@ class WiiPi:
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = [0,0,0,0]
         self.rumble()
-        self.buttons = Buttons
+        self.buttons = self.Buttons
 
     def update(self):
         print(self.buttons.a)
