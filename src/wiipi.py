@@ -57,6 +57,7 @@ class Remap:
         if self.arg == 0:
             self.argstr[0] = f"{btn} (tap): "
             keyboard.type(self.argstr[0])
+            self.pos = len(self.argstr[0])
             self.next()
 
     def set(self, wiipi):
