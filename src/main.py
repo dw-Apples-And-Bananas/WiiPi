@@ -12,7 +12,7 @@ class Wii(WiiPi):
         keyboard.type("A Pressed\n")
         super().A_pressed()
     def A_released(self):
-        keyboard.type("A Released\n")
+        keyboard.type("A Released\n\n")
         super().A_released()
 
     def update(self):
