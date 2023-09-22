@@ -10,10 +10,10 @@ class Wii(WiiPi):
 
     def button_pressed(self, btn):
         keyboard.type(f"{btn} Pressed\n")
-        super().button_pressed()
+        super().button_pressed(btn)
     def button_released(self, btn):
         keyboard.type(f"{btn} Released\n\n")
-        super().button_released()
+        super().button_released(btn)
 
     def update(self):
         while True:
