@@ -30,7 +30,7 @@ class Remap:
     def setup(self):
         text = "\n".join(self.argstr)
         keyboard.type(text)
-        self.pos = [len(self.argstr)-1, len(self.argstr[-1])
+        self.pos = [len(self.argstr)-1, len(self.argstr[-1])]
         self.select(0)
         
     def select(self, arg):
