@@ -2,6 +2,7 @@ import time
 import cwiid
 import os, sys
 import json
+import threading
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -20,6 +21,7 @@ class WiiPi:
             time.sleep(0.7)
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = "0000"
+        self.blinking = False
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
@@ -64,12 +66,19 @@ class WiiPi:
         self.buttons[btn].holdtime = -1
         
     def button_held(self, btn):
-        print(btn, "held")
         if btn == "home":
             if self.configID < 4:
                 self.load_config(self.configID+1)
             else:
                 self.load_config(1)
+        leds = self.leds
+        self.led("0000")
+        time.sleep(0.1)
+        self.led("1111")
+        time.sleep(0.2)
+        self.led("0000")
+        time.sleep(0.1)
+        self.led(leds)
         self.buttons[btn].holdtime = -1
         
     def led(self, leds:str):
