@@ -11,6 +11,7 @@ class Button:
         self.ID = ID
         self.value = value
         self.holdtime = holdtime
+        self.holding = True
 
 class WiiPi:
     def __init__(self):
@@ -40,7 +41,12 @@ class WiiPi:
         self.load_config(1)
 
     def load_config(self, ID):
-        self.configID = ID
+        if ID < 1:
+            self.configID = 4
+        elif ID > 4:
+            self.configID = 1
+        else:
+            self.configID = ID
         self.config = self.configs[str(ID)]
         self.led(self.config["led"])
 
@@ -58,27 +64,26 @@ class WiiPi:
             time.sleep(0.01)
 
     def button_pressed(self, btn):
+        if self.buttons["home"].holding:
+            if btn == "left":
+                self.load_config(self.configID-1)
+            elif BTN == "right":
+                self.load_config(self.configID+1)
         self.buttons[btn].value = 1
         self.buttons[btn].holdtime = time.time()
         
     def button_released(self, btn):
         self.buttons[btn].value = 0
-        self.buttons[btn].holdtime = -1
+        self.buttons[btn].holding = False
         
     def button_held(self, btn):
-        if btn == "home":
-            if self.configID < 4:
-                self.load_config(self.configID+1)
-            else:
-                self.load_config(1)
         leds = self.leds
-        self.led("0000")
-        time.sleep(0.1)
         self.led("1111")
         time.sleep(0.2)
         self.led("0000")
         time.sleep(0.1)
         self.led(leds)
+        self.buttons[btn].holding = True
         self.buttons[btn].holdtime = -1
         
     def led(self, leds:str):
