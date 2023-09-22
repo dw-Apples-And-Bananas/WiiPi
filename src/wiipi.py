@@ -36,16 +36,16 @@ class Remap:
     def select(self, arg):
         self.arg = arg
         length = len(self.argstr[arg])
+        for i in range(self.pos[1]):
+            keyboard.press([], KeyCodes.KEY_LEFT)
+        self.pos[1] = 0
         if self.pos[0] > arg:
             for i in range(self.pos[0]-arg):
                 keyboard.press([], KeyCodes.KEY_UP)
         elif self.pos[0] < arg:
             for i in range(arg-self.pos[0]):
                 keyboard.press([], KeyCodes.KEY_DOWN)
-        if self.pos[1] > length:
-            for i in range(self.pos[1]-length):
-                keyboard.press([], KeyCodes.KEY_LEFT)
-        elif self.pos[1] < length:
+        if self.pos[1] < length:
             for i in range(length-self.pos[1]):
                 keyboard.press([], KeyCodes.KEY_RIGHT)
         for i in range(len(self.argvar[arg])):
