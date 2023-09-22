@@ -47,9 +47,9 @@ class Remap:
             for i in range(arg-self.pos[0]):
                 keyboard.press([], KeyCodes.KEY_DOWN)
         time.sleep(0.1)
-        if self.pos[1] < length:
-            for i in range(length-self.pos[1]):
-                keyboard.press([], KeyCodes.KEY_RIGHT)
+        for i in range(length):
+            keyboard.press([], KeyCodes.KEY_RIGHT)
+        time.sleep(0.1)
         for i in range(len(self.argvar[arg])):
             keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
         self.pos = [arg, length+len(self.argvar[arg])]
