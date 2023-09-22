@@ -33,7 +33,7 @@ class Remap:
         self.select(0)
         
     def select(self, arg):
-        length = len(self.args[arg])-1
+        length = len(self.args[arg])-2
         for i in range(length):
             keyboard.press([], KeyCodes.KEY_LEFT)
         self.pos[1] = 0
