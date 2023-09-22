@@ -2,12 +2,32 @@ import time
 import cwiid
 
 class WiiPi:    
+    class Buttons:
+        a=0
     def __init__(self):
         if not self.connect():
             quit()
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = [0,0,0,0]
         self.rumble()
+        self.buttons = Buttons
+
+    def update(self):
+        print(self.buttons.a)
+        btnState = wii.state["buttons"]
+        if btnState:
+            if cwiid.BTN_A and self.buttons.a == 0:
+                self.A_pressed()
+        else:
+            if self.buttons.a == 1:
+                self.A_released()
+            
+
+    def A_pressed(self):
+        self.buttons.a = 1
+
+    def A_released(self):
+        self.buttons.a = 0
 
     def led(self, leds:list[int]):
         ids = {
