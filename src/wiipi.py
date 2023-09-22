@@ -53,6 +53,9 @@ class WiiPi:
                     self.button_released(btn)
                 elif self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 1:
                     self.button_held(btn)
+                if self.buttons[btn].holdtime != -1:
+                    print(time.time() - self.buttons[btn].holdtime)
+                    print(btn)
             time.sleep(0.01)
 
     def button_pressed(self, btn):
