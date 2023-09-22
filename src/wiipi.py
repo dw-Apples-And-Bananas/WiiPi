@@ -22,7 +22,8 @@ class WiiPi:
             time.sleep(0.7)
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = "0000"
-        self.blinking = False
+        self.blink = None
+        self.blinktime = 0
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
@@ -36,6 +37,7 @@ class WiiPi:
             "1": Button(cwiid.BTN_1),
             "2": Button(cwiid.BTN_2)
         }
+        self.remapping = False
         with open(f"{DIR}/configs.json") as f:
             self.configs = json.load(f)
         self.load_config(1)
@@ -61,18 +63,32 @@ class WiiPi:
                     self.button_released(btn)
                 if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 1:
                     self.button_held(btn)
+            if blink != None and time.time() - self.blinktime > 0.5:
+                if self.leds == self.blink:
+                    self.led("0000")
+                else:
+                    self.led(self.blink)
             time.sleep(0.01)
 
     def button_pressed(self, btn):
-        if self.buttons["home"].holding:
-            if btn == "left":
-                self.load_config(self.configID-1)
-            elif btn == "right":
-                self.load_config(self.configID+1)
+        
         self.buttons[btn].value = 1
         self.buttons[btn].holdtime = time.time()
         
     def button_released(self, btn):
+        if not self.buttons[btn].holding:
+            if self.buttons["home"].holding:
+                if btn == "a":
+                    if self.remapping:
+                        self.blink = None
+                        self.remapping = False
+                    else:
+                        self.blink = self.leds
+                        self.remapping = True
+                elif btn == "left":
+                    self.load_config(self.configID-1)
+                elif btn == "right":
+                    self.load_config(self.configID+1)
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = False
