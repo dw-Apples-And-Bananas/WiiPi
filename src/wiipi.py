@@ -1,10 +1,11 @@
 import time
 import cwiid
+import os
 
 class WiiPi:
     def __init__(self):
         if not self.connect():
-            quit()
+            os.execl(sys.executable, sys.executable, *sys.argv)
         time.sleep(3)
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = [0,0,0,0]
@@ -65,11 +66,8 @@ class WiiPi:
         self.wii.rumble = 0
 
     def connect(self):
-        attempts = 0
-        while attempts <= 3:
-            try:
-                self.wii = cwiid.Wiimote()
-                return True
-            except RuntimeError:
-                attempts += 1
-        return False
+        try:
+            self.wii = cwiid.Wiimote()
+            return True
+        except RuntimeError:
+            return False
