@@ -34,7 +34,7 @@ class Remap:
     def select(self, arg):
         self.arg = arg
         length = 0
-        for i in range(arg):
+        for i in range(arg+1):
             length += len(self.argstr[i])
         if length < self.pos:
             for i in range(self.pos-length):
