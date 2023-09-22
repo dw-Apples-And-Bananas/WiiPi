@@ -19,4 +19,5 @@ class Wii(WiiPi):
         while True:
             super().update()
 
+time.sleep(5)
 Wii()
