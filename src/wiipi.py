@@ -68,6 +68,7 @@ class WiiPi:
                     self.led("0000")
                 else:
                     self.led(self.blink)
+                self.blinktime = time.time()
             time.sleep(0.01)
 
     def button_pressed(self, btn):
