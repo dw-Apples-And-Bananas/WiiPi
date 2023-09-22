@@ -43,7 +43,7 @@ class Remap:
         else:
             for i in range(length-self.pos):
                 keyboard.press([], KeyCodes.KEY_RIGHT)
-        for i in range(len(self.argstr[i])-1):
+        for i in range(len(self.argstr[arg])):
             keyboard.press([Keycodes.MOD_LEFT_SHIFT], KeyCodes.KEY_LEFT)
     
     def released(self, btn):
