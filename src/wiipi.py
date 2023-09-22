@@ -43,8 +43,8 @@ class Remap:
         else:
             for i in range(length-self.pos):
                 keyboard.press([], KeyCodes.KEY_RIGHT)
-        #for i in range(len(self.argstr[arg])):
-          #  keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_LEFT)
+        for i in range(len(self.argstr[arg])):
+            keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
     
     def released(self, btn):
         if self.arg == 0:
@@ -153,7 +153,7 @@ class WiiPi:
             self.remapping = False
             self.remap.write()
             self.load_configs()
-        else:
+        elif btn != "home":
             self.remap.released(btn)
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
