@@ -67,7 +67,7 @@ class WiiPi:
         if self.buttons["home"].holding:
             if btn == "left":
                 self.load_config(self.configID-1)
-            elif BTN == "right":
+            elif btn == "right":
                 self.load_config(self.configID+1)
         self.buttons[btn].value = 1
         self.buttons[btn].holdtime = time.time()
