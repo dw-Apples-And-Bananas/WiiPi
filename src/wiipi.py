@@ -31,7 +31,6 @@ class Remap:
         self.pos = len(text)
         self.select(0)
         
-        
     def select(self, arg):
         self.arg = arg
         length = 0
@@ -45,12 +44,20 @@ class Remap:
                 keyboard.press([], KeyCodes.KEY_RIGHT)
         for i in range(len(self.argstr[arg])):
             keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
+
+    def back(self):
+        if self.arg > 0:
+            self.select(self.arg-1)
+            
+    def next(self):
+        if self.arg < 2:
+            self.select(self.arg+1)
     
     def released(self, btn):
         if self.arg == 0:
             self.argstr[0] = f"{btn} (tap): "
             keyboard.type(self.argstr[0])
-            self.select(0)
+            self.next()
 
     def set(self, wiipi):
         self.configs = wiipi.configs
@@ -148,12 +155,15 @@ class WiiPi:
                         self.load_config(self.configID-1)
                     elif btn == "right":
                         self.load_config(self.configID+1)
-        elif not self.buttons[btn].holding and self.buttons["home"].holding and btn == "a":
-            self.led(self.blink)
-            self.blink = None
-            self.remapping = False
-            self.remap.write()
-            self.load_configs()
+        elif not self.buttons[btn].holding and self.buttons["home"].holding:
+            if btn == "a":
+                self.led(self.blink)
+                self.blink = None
+                self.remapping = False
+                self.remap.write()
+                self.load_configs()
+            elif btn == "b":
+                self.remap.back()
         elif btn != "home":
             self.remap.released(btn)
         self.buttons[btn].value = 0
