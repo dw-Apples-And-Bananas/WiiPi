@@ -19,7 +19,7 @@ class WiiPi:
             self.rumble(0.3)
             time.sleep(0.7)
         self.wii.rpt_mode = cwiid.RPT_BTN
-        self.leds = [0,0,0,0]
+        self.leds = "0000"
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
@@ -71,24 +71,24 @@ class WiiPi:
                 self.load_config(1)
         self.buttons[btn].holdtime = -1
         
-    def led(self, leds:list[int]):
+    def led(self, leds:str):
         ids = {
-            [0,0,0,0]: 0,
-            [1,0,0,0]: 1,
-            [0,1,0,0]: 2,
-            [1,1,0,0]: 3,
-            [0,0,1,0]: 4,
-            [1,0,1,0]: 5,
-            [0,1,1,0]: 6,
-            [1,1,1,0]: 7,
-            [0,0,0,1]: 8,
-            [1,0,0,1]: 9,
-            [0,1,0,1]: 10,
-            [1,1,0,1]: 11,
-            [0,0,1,1]: 12,
-            [1,0,1,1]: 13,
-            [0,1,1,1]: 14,
-            [1,1,1,1]: 15
+            "0000": 0,
+            "1000": 1,
+            "0100": 2,
+            "1100": 3,
+            "0010": 4,
+            "1010": 5,
+            "0110": 6,
+            "1110": 7,
+            "0001": 8,
+            "1001": 9,
+            "0101": 10,
+            "1101": 11,
+            "0011": 12,
+            "1011": 13,
+            "0111": 14,
+            "1111": 15
         }
         wii.led = ids[leds]
         self.leds = leds
