@@ -37,7 +37,7 @@ class WiiPi:
             self.configs = json.load(f)
         self.load_config(1)
 
-    def load_config(ID):
+    def load_config(self, ID):
         self.configID = ID
         self.config = self.configs[str(ID)]
         self.led(self.config["led"])
