@@ -64,12 +64,13 @@ class Remap:
         if self.arg == 0:
             self.argvar[0] = btn
             keyboard.type(self.argvar[0])
+            self.pos[1] += len(btn)
             self.next()
         elif self.arg == 1:
             if btn == "right":
                 self.modifier += 1
                 keyboard.type(self.modifiers[self.modifier])
-                self.pos += len(self.modifiers[self.modifier])
+                self.pos[1] += len(self.modifiers[self.modifier])
                 self.select(1)
 
     def set(self, wiipi):
