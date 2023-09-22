@@ -35,7 +35,7 @@ class Remap:
         self.arg = arg
         length = 0
         for i in range(arg):
-            length += self.argstr[i]
+            length += len(self.argstr[i])
         if length < self.pos:
             for i in range(self.pos-length):
                 keyboard.press([], KeyCodes.KEY_LEFT)
