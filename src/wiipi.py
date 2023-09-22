@@ -26,8 +26,9 @@ class WiiPi:
     def update(self):
         btnState = self.wii.state["buttons"]
         for btn in self.buttons:
-            if (btnState & self.buttons[btn][0]) and self.buttons[btn][1] == 0:
-                self.button_pressed(btn)
+            if (btnState & self.buttons[btn][0]):
+                if self.buttons[btn][1] == 0:
+                    self.button_pressed(btn)
             elif self.buttons[btn][1] == 1:
                 self.button_released(btn)
 
