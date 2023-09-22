@@ -83,6 +83,8 @@ class WiiPi:
                     if btn == "a":
                         self.blink = self.leds
                         self.remapping = True
+                    elif btn == "minus":
+                        self.led("0000")
                     elif btn == "left":
                         self.load_config(self.configID-1)
                     elif btn == "right":
