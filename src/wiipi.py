@@ -1,6 +1,9 @@
 import time
 import cwiid
 import os, sys
+import json
+
+DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Button:
     def __init__(self, ID:int, value:int=0, holdtime:int=-1):
@@ -12,10 +15,11 @@ class WiiPi:
     def __init__(self):
         if not self.connect():
             os.execl(sys.executable, sys.executable, *sys.argv)
-        time.sleep(3)
+        for i in range(3):
+            self.rumble(0.3)
+            time.sleep(0.7)
         self.wii.rpt_mode = cwiid.RPT_BTN
         self.leds = [0,0,0,0]
-        self.rumble()
         self.buttons = {
             "a": Button(cwiid.BTN_A),
             "b": Button(cwiid.BTN_B),
@@ -29,24 +33,36 @@ class WiiPi:
             "1": Button(cwiid.BTN_1),
             "2": Button(cwiid.BTN_2)
         }
+        with open(f"{DIR}/configs.json") as f:
+            self.configs = json.load(f)
+        self.load_config(1)
 
-    def update(self):
-        btnState = self.wii.state["buttons"]
-        for btn in self.buttons:
-            if (btnState & self.buttons[btn].ID):
-                if self.buttons[btn].value == 0:
-                    self.button_pressed(btn)
-            elif self.buttons[btn].value == 1:
-                self.button_released(btn)
-            elif self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 1:
-                self.button_held(btn)
+    def load_config(ID):
+        self.configID = ID
+        self.config = self.configs[str(ID)]
+        self.led(self.config["led"])
+
+    def run(self):
+        while True:
+            btnState = self.wii.state["buttons"]
+            for btn in self.buttons:
+                if (btnState & self.buttons[btn].ID):
+                    if self.buttons[btn].value == 0:
+                        self.button_pressed(btn)
+                elif self.buttons[btn].value == 1:
+                    self.button_released(btn)
+                elif self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 1:
+                    self.button_held(btn)
+            time.sleep(0.01)
 
     def button_pressed(self, btn):
         self.buttons[btn].value = 1
         self.buttons[btn].holdtime = time.time()
+        
     def button_released(self, btn):
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
+        
     def button_held(self, btn):
         self.buttons[btn].holdtime = -1
         
@@ -83,3 +99,6 @@ class WiiPi:
             return True
         except RuntimeError:
             return False
+
+
+WiiPi().run()
