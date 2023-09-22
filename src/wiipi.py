@@ -88,7 +88,8 @@ class WiiPi:
                     elif btn == "right":
                         self.load_config(self.configID+1)
         elif not self.buttons[btn].holding and self.buttons["home"].holding and btn == "a":
-            self.blink = self.leds
+            self.led(self.blink)
+            self.blink = None
             self.remapping = False
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
