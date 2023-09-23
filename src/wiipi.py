@@ -35,6 +35,7 @@ class Remap:
         self.text = json.dumps(self.args, indent=2)
         keyboard.type(self.text)
         self.pos = [self.text.count("\n"), len(self.text.split("\n")[-1])]
+        print(self.pos)
         self.position(0,0)
 
     def position(self, y, x):
