@@ -59,6 +59,12 @@ class Remap:
         for i in range(len(arg)):
             keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
         self.pos[1] += len(arg)
+
+    def edit(self, y, var):
+        self.args[self.argnames[y]] = var
+        keyboard.type(var)
+        self.pos[1] += len(var)
+
     
     def back(self):
         if self.arg > 0:
@@ -70,9 +76,9 @@ class Remap:
     
     def released(self, btn):
         if self.arg == 0:
-            self.args[0] = btn
-            keyboard.type(self.args[0])
-            self.pos[1] = len(self.args[0])
+            self.edit(0, btn)
+            self.select(1)
+            self.edit(1, "tap")
         elif self.arg == 1:
             if btn == "right":
                 self.modifier += 1
