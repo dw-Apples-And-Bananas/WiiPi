@@ -24,7 +24,7 @@ class Remap:
         self.argnames = ["button", "action", "modifiers", "key"]
         self.args = {
             "button": "Hold/Tap Button On Wiimote",
-            "action": None,
+            "action": "null",
             "modifiers": "Cycle Modifiers With Left and Right Buttons",
             "key": "Cycle Keys With Left and Right Buttons"
         }
