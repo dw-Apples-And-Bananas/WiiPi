@@ -48,7 +48,7 @@ class Remap:
                 keyboard.press([], KeyCodes.KEY_UP)
         elif vertical < 0:
             for i in range(vertical*-1):
-                keyboard.press([], KeyCdes.KEY_DOWN)
+                keyboard.press([], KeyCodes.KEY_DOWN)
         for i in range(x):
             keyboard.press([], KeyCodes.KEY_RIGHT)
         self.pos = [y, x]
