@@ -22,20 +22,24 @@ class Remap:
         self.modifiers = ["gui", "control", "shift", "alt"]
         self.modifier = -1
         self.args = {
-            "button": "Press Button On Wiimote",
-            "modifiers": "gui control shift alt",
-            "key": "a b c d e f g h i j k l m n o p q r s t u v w x y z 1 2 3 4 5 6 7 8 9 0"
+            "button": "Hold/Tap Button On Wiimote",
+            "action": None,
+            "modifiers": "Cycle Modifiers With Left and Right Buttons",
+            "key": "Cycle Keys With Left and Right Buttons"
         }
         self.arg = 0
+        self.text = ""
         self.set(wiipi)
 
     def setup(self):
-        text = json.dumps(self.args, indent=2)
-        print(text)
-        keyboard.type(text)
-        self.pos = [text.count("\n"), len(text.split("\n")[-1])]
+        self.text = json.dumps(self.args, indent=2)
+        keyboard.type(self.text)
+        self.pos = [self.text.count("\n"), len(self.text.split("\n")[-1])]
+        self.position(0,0)
 
     def position(self, y, x):
+        for i in range(self.pos[1]):
+            keyboard.type([], KeyCodes.KEY_LEFT)
         vertical = self.pos[0] - y
         if vertical > 0:
             for i in range(vertical):
@@ -43,17 +47,14 @@ class Remap:
         elif vertical < 0:
             for i in range(vertical*-1):
                 keyboard.type([], KeyCdes.KEY_DOWN)
-        horizontal = self.pos[1] - x
-        if horizontal > 0:
-            for i in range(horizontal):
-                keyboard.type([], KeyCodes.KEY_LEFT)
-        elif horizontal < 0:
-            for i in range(horizontal*-1):
-                keyboard.type([], KeyCodes.KEY_RIGHT)
+        for i in range(x):
+            keyboard.type([], KeyCodes.KEY_RIGHT)
         self.pos = [y, x]
+        print(self.pos)
         
-    def select(self, num):
-        pass
+    def select(self, y):
+        x = self.text.split("\n")[y+1].find(self.args[y])
+        self.position(y+1,x)
     
     def back(self):
         if self.arg > 0:
