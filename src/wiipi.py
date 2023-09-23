@@ -203,13 +203,17 @@ class WiiPi:
                     self.remap.back()
             elif btn != "home":
                 self.remap.released(btn)
+        else:
+            keyboard.release()
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = False
         
     def button_held(self, btn):
         if not self.remapping:
-            pass
+            mods, key = self.config["hold"][btn]
+            # Convert string to hid code
+            keyboard.press(mods, key, False)
         elif btn != "home":
             self.remap.held(btn)
         leds = self.leds
