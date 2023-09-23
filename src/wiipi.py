@@ -90,6 +90,12 @@ class Remap:
                 self.pos[1] = len(self.args[1])
                 self.select(1)
 
+    def held(self, btn):
+        if self.arg == 0:
+            self.edit(0, btn)
+            self.select(1)
+            self.edit(1, "hold")
+
     def set(self, wiipi):
         self.configs = wiipi.configs
         self.configID = wiipi.config
@@ -202,6 +208,10 @@ class WiiPi:
         self.buttons[btn].holding = False
         
     def button_held(self, btn):
+        if not self.remapping:
+            pass
+        elif btn != "home":
+            self.remap.held(btn)
         leds = self.leds
         self.led("1111")
         time.sleep(0.2)
