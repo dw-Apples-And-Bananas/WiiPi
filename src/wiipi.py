@@ -41,7 +41,7 @@ class Remap:
                 keyboard.type([], KeyCodes.KEY_UP)
         elif vertical < 0:
             for i in range(vertical*-1):
-                keyboard.type([], KeyCdes.KEY_DOWN):
+                keyboard.type([], KeyCdes.KEY_DOWN)
         horizontal = self.pos[1] - x
         if horizontal > 0:
             for i in range(horizontal):
