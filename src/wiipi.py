@@ -21,6 +21,7 @@ class Remap:
     def __init__(self, wiipi):
         self.modifiers = ["gui", "control", "shift", "alt"]
         self.modifier = -1
+        self.argnames = ["button", "action", "modifiers", "key"]
         self.args = {
             "button": "Hold/Tap Button On Wiimote",
             "action": None,
@@ -53,7 +54,7 @@ class Remap:
         self.pos = [y, x]
         
     def select(self, y):
-        x = self.text.split("\n")[y+1].find(self.args[y])
+        x = self.text.split("\n")[y+1].find(self.args[self.argnames[y]])
         self.position(y+1,x)
     
     def back(self):
