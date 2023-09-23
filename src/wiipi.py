@@ -212,7 +212,7 @@ class WiiPi:
             pass
         elif btn != "home":
             self.remap.held(btn)
-        self.rumble(0.05)
+        self.rumble(0.02)
         self.buttons[btn].holding = True
         self.buttons[btn].holdtime = -1
         
