@@ -63,7 +63,7 @@ class Remap:
         self.pos[1] += len(arg)
 
     def edit(self, y, var):
-        self.pos[1] -= self.args[self.argnames[y]]
+        self.pos[1] -= len(self.args[self.argnames[y]])
         self.args[self.argnames[y]] = var
         keyboard.type(var)
         self.pos[1] += len(var)
