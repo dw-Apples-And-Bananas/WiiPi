@@ -43,17 +43,17 @@ class Remap:
         time.sleep(1)
         for i in range(self.pos[1]):
             print(i)
-            keyboard.type([], KeyCodes.KEY_LEFT)
+            keyboard.press([], KeyCodes.KEY_LEFT)
         time.sleep(1)
         vertical = self.pos[0] - y
         if vertical > 0:
             for i in range(vertical):
-                keyboard.type([], KeyCodes.KEY_UP)
+                keyboard.press([], KeyCodes.KEY_UP)
         elif vertical < 0:
             for i in range(vertical*-1):
-                keyboard.type([], KeyCdes.KEY_DOWN)
+                keyboard.press([], KeyCdes.KEY_DOWN)
         for i in range(x):
-            keyboard.type([], KeyCodes.KEY_RIGHT)
+            keyboard.press([], KeyCodes.KEY_RIGHT)
         self.pos = [y, x]
         print(self.pos)
         
