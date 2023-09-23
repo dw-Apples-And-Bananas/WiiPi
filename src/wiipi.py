@@ -39,6 +39,7 @@ class Remap:
         self.position(0,0)
 
     def position(self, y, x):
+        print(self.pos)
         time.sleep(1)
         for i in range(self.pos[1]):
             print(i)
