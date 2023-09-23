@@ -36,7 +36,6 @@ class Remap:
         self.text = json.dumps(self.args, indent=2)
         keyboard.type(self.text)
         self.pos = [self.text.count("\n"), len(self.text.split("\n")[-1])]
-        self.position(0,0)
         self.select(0)
 
     def position(self, y, x):
@@ -54,8 +53,12 @@ class Remap:
         self.pos = [y, x]
         
     def select(self, y):
-        x = self.text.split("\n")[y+1].find(self.args[self.argnames[y]])
+        arg = self.args[self.argnames[y]]
+        x = self.text.split("\n")[y+1].find(arg)
         self.position(y+1,x)
+        for i in range(len(arg)):
+            keyboard.press([KeyCodes.MOD_LEFT_SHIFT], KeyCodes.KEY_RIGHT)
+        self.pos[1] += len(arg)
     
     def back(self):
         if self.arg > 0:
