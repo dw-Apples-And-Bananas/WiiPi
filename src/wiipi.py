@@ -39,6 +39,7 @@ class Remap:
         self.select(0)
 
     def position(self, y, x):
+        print(y)
         for i in range(self.pos[1]):
             keyboard.press([], KeyCodes.KEY_LEFT)
         vertical = self.pos[0] - y
