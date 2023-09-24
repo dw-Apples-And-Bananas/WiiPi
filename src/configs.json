@@ -9,8 +9,8 @@
       "left": ["gui", "z"],
       "right": ["gui+shift", "z"],
       "a": [["", "b"], ["", "e"]],
-      "plus": ["", "rightparen"],
-      "minus": ["", "leftparen"],
+      "minus": ["", "leftbracket"],
+      "plus": ["", "rightbracket"],
       "1": ["", "l"],
       "2": ["", "v"]
     },
