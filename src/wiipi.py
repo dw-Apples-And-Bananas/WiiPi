@@ -199,24 +199,7 @@ class WiiPi:
                     elif btn == "2":
                         print(self.wii.close())
                 else:
-                    try:
-                        _map = self.config["tap"][btn]
-                        mod = ""
-                        key = ""
-                        if type(_map[0]) == list:
-                            if not btn in self.alternate["tap"]:
-                                self.alternate["tap"][btn] = 0
-                            index = self.alternate["tap"][btn]
-                            if index > len(_map)-1:
-                                index = 0
-                            mod, key = _map[index]
-                            self.alternate["tap"][btn] = index+1
-                        elif type(_map[0]) == str:
-                            mod, key = self.config["tap"][btn]
-                        keyboard.press([hid[mod]], hid[key])
-                    except KeyError as e:
-                        print(e)
-                        print(f"Button Not Mapped: {btn}")
+                    self.press("tap", btn)
             elif not self.buttons[btn].holding and self.buttons["home"].holding:
                 if btn == "a":
                     self.led(self.blink)
@@ -236,11 +219,7 @@ class WiiPi:
         
     def button_held(self, btn):
         if not self.remapping:
-            try:
-                mod, key = self.config["hold"][btn]
-                keyboard.press([hid[mod]], hid[key], False)
-            except KeyError:
-                print(f"Button Not Mapped: {btn}")
+            self.press("hold", btn, False)
         elif btn != "home":
             self.remap.held(btn)
         leds = self.leds
@@ -251,6 +230,27 @@ class WiiPi:
         self.led(leds)
         self.buttons[btn].holding = True
         self.buttons[btn].holdtime = -1
+
+    def press(self, action, btn, release=True):
+        try:
+            _map = self.config[action][btn]
+            mod = ""
+            key = ""
+            if type(_map[0]) == list:
+                if not btn in self.alternate[action]:
+                    self.alternate[action][btn] = 0
+                index = self.alternate[action][btn]
+                if index > len(_map)-1:
+                    index = 0
+                mod, key = _map[index]
+                self.alternate[action][btn] = index+1
+            elif type(_map[0]) == str:
+                mod, key = self.config[action][btn]
+            keyboard.press([hid[mod]], hid[key], release)
+        except KeyError as e:
+            print(e)
+            print(f"{action} Button Not Mapped: {btn}")
+
         
     def led(self, leds:str):
         ids = {
