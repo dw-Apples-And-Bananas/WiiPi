@@ -182,7 +182,8 @@ class WiiPi:
                 try:
                     mod, key = self.config["tap"][btn]
                     keyboard.press([hid[mod]], hid[key])
-                except KeyError:
+                except KeyError as e:
+                    print(e)
                     print(f"Button Not Mapped: {btn}")
                 if self.buttons["home"].holding:
                     if btn == "a":
@@ -210,7 +211,8 @@ class WiiPi:
                     self.remap.back()
             elif btn != "home":
                 self.remap.released(btn)
-        keyboard.release()
+        else:
+            keyboard.release()
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = False
