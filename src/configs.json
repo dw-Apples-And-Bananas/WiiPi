@@ -2,15 +2,15 @@
   "1": {
     "led": "1000",
     "hold": {
-      "b": [["shift"], ""]
+      "b": ["shift", ""]
     },
     "tap": {
-      "left": [["gui"], "z"],
-      "right": [["gui", "control"], "z"]
+      "left": ["gui", "z"],
+      "right": ["gui+shift", "z"]
     },
     "hold+tap": {
       "b": {
-        "a": [["gui"], "tab"]
+        "a": ["gui", "tab"]
       }
     }
   },

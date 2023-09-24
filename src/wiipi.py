@@ -4,13 +4,15 @@ import os, sys
 import json
 import threading
 
+from strhid import hid
+
 from zero_hid import Keyboard, KeyCodes
 keyboard = Keyboard()
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 
 class Button:
-    def __init__(self, ID:int, value:int=0, holdtime:int=-1):
+    def __init__(self, ID:int, value:int=0, holdtime:float=-1):
         self.ID = ID
         self.value = value
         self.holdtime = holdtime
@@ -42,7 +44,7 @@ class Remap:
         print(y)
         print(self.pos)
         for i in range(self.pos[1]):
-            keyboard.press([], KeyCodes.KEY_LEFT, 0.5)
+            keyboard.press([], KeyCodes.KEY_LEFT)
         vertical = self.pos[0] - y
         if vertical > 0:
             for i in range(vertical):
@@ -177,6 +179,8 @@ class WiiPi:
     def button_released(self, btn):
         if not self.buttons[btn].holding:
             if not self.remapping:
+                mod, key = self.config["tap"][btn]
+                keyboard.press([hid[mod]], hid[key])
                 if self.buttons["home"].holding:
                     if btn == "a":
                         self.blink = self.leds
