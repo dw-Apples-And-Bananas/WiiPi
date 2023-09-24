@@ -138,6 +138,7 @@ class WiiPi:
         self.load_configs()
         self.remapping = False
         self.remap = Remap(self)
+        self.alternate = {"tap":{},"hold":{},"hold+tap":{}}
 
     def load_configs(self):
         with open(f"{DIR}/configs.json") as f:
@@ -199,7 +200,18 @@ class WiiPi:
                         print(self.wii.close())
                 else:
                     try:
-                        mod, key = self.config["tap"][btn]
+                        _map = self.config["tap"][btn]
+                        mod = ""
+                        key = ""
+                        if type(_map) == list[list]:
+                            if not btn in self.alternate["tap"]:
+                                self.alternate["tap"][btn] = 0
+                            action = self.alternate["tap"][btn]
+                            if action > len(_map)-1:
+                                action = 0
+                            mod, key = _map[action]
+                        elif type(_map) == list[str]:
+                            mod, key = self.config["tap"][btn]
                         keyboard.press([hid[mod]], hid[key])
                     except KeyError as e:
                         print(e)
