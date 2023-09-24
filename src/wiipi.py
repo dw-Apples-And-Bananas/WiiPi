@@ -206,11 +206,11 @@ class WiiPi:
                         if type(_map[0]) == list:
                             if not btn in self.alternate["tap"]:
                                 self.alternate["tap"][btn] = 0
-                            action = self.alternate["tap"][btn]
-                            if action > len(_map)-1:
-                                action = 0
-                            mod, key = _map[action]
-                            self.alternate["tap"][btn] = action+1
+                            index = self.alternate["tap"][btn]
+                            if index > len(_map)-1:
+                                index = 0
+                            mod, key = _map[index]
+                            self.alternate["tap"][btn] = index+1
                         elif type(_map[0]) == str:
                             mod, key = self.config["tap"][btn]
                         keyboard.press([hid[mod]], hid[key])
