@@ -113,6 +113,7 @@ class WiiPi:
     def __init__(self):
         if not self.connect():
             os.execl(sys.executable, sys.executable, *sys.argv)
+        print(1)
         for i in range(3):
             self.rumble(0.3)
             time.sleep(0.7)
@@ -220,6 +221,7 @@ class WiiPi:
         self.buttons[btn].holding = False
         
     def button_held(self, btn):
+        print(btn)
         if not self.remapping:
             try:
                 mod, key = self.config["hold"][btn]
