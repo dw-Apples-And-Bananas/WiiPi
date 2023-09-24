@@ -210,8 +210,7 @@ class WiiPi:
                     self.remap.back()
             elif btn != "home":
                 self.remap.released(btn)
-        else:
-            keyboard.release()
+        keyboard.release()
         self.buttons[btn].value = 0
         self.buttons[btn].holdtime = -1
         self.buttons[btn].holding = False
