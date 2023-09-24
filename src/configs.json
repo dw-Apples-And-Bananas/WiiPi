@@ -6,7 +6,8 @@
     },
     "tap": {
       "left": ["gui", "z"],
-      "right": ["gui+shift", "z"]
+      "right": ["gui+shift", "z"],
+      "a": [["", "b"], ["", "e"]]
     },
     "hold+tap": {
       "b": {
