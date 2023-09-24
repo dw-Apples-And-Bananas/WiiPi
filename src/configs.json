@@ -2,12 +2,17 @@
   "1": {
     "led": "1000",
     "hold": {
-      "b": ["shift", ""]
+      "b": ["shift", ""],
+      "1": ["gui", "l"]
     },
     "tap": {
       "left": ["gui", "z"],
       "right": ["gui+shift", "z"],
-      "a": [["", "b"], ["", "e"]]
+      "a": [["", "b"], ["", "e"]],
+      "plus": ["", "rightparen"],
+      "minus": ["", "leftparen"],
+      "1": ["", "l"],
+      "2": ["gui", "d", true]
     },
     "hold+tap": {
       "b": {

@@ -242,10 +242,12 @@ class WiiPi:
                 index = self.alternate[action][btn]
                 if index > len(_map)-1:
                     index = 0
-                mod, key = _map[index]
+                mod, key = _map[index][0], _map[index][1]
                 self.alternate[action][btn] = index+1
             elif type(_map[0]) == str:
-                mod, key = self.config[action][btn]
+                mod, key = _map[0], _map[1]
+            if len(_map) == 3:
+                release = _map[2]
             keyboard.press([hid[mod]], hid[key], release)
         except KeyError as e:
             print(e)
