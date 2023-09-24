@@ -28,9 +28,27 @@
   },
   "2": {
     "led": "0100",
-    "hold": {},
-    "tap": {},
-    "hold+tap": {}
+    "hold": {
+      "up": ["", "h", true],
+      "down": ["", "r", true],
+      "b": ["shift", ""],
+      "minus": ["", "leftbracket"],
+      "plus": ["", "rightbracket"],
+      "1": ["control", "d", true]
+    },
+    "tap": {
+      "up": ["control", "equal"],
+      "down": ["control", "minus"],
+      "left": ["control", "z"],
+      "right": ["control+shift", "z"],
+      "a": [["", "b"], ["", "e"]],
+      "minus": ["", "leftbracket"],
+      "plus": ["", "rightbracket"],
+      "1": ["", "l"],
+      "2": ["", "v"]
+    },
+    "hold+tap": {
+    }
   },
   "3": {
     "led": "0010",
