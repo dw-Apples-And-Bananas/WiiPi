@@ -163,7 +163,7 @@ class WiiPi:
                         self.button_pressed(btn)
                 elif self.buttons[btn].value == 1:
                     self.button_released(btn)
-                if self.buttons[btn].holdtime != -0.6 and time.time() - self.buttons[btn].holdtime > 1:
+                if self.buttons[btn].holdtime != -1 and time.time() - self.buttons[btn].holdtime > 0.6:
                     self.button_held(btn)
             if self.blink != None and time.time() - self.blinktime > 0.5:
                 if self.leds == self.blink:
