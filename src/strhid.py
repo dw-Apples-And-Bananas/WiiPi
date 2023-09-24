@@ -1,4 +1,6 @@
 hid = {
+  "": 0,
+
   # MDIFIERS
   "control": 0x01,
   "shift": 0x02,
