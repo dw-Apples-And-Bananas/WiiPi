@@ -16,7 +16,7 @@ class Button:
         self.ID = ID
         self.value = value
         self.holdtime = holdtime
-        self.holding = True
+        self.holding = False
 
 
 class Remap:
@@ -221,7 +221,6 @@ class WiiPi:
         self.buttons[btn].holding = False
         
     def button_held(self, btn):
-        print(btn)
         if not self.remapping:
             try:
                 mod, key = self.config["hold"][btn]
