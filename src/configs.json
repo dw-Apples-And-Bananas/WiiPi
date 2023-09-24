@@ -3,7 +3,7 @@
     "led": "1000",
     "hold": {
       "b": ["shift", ""],
-      "1": ["gui", "l"]
+      "1": ["gui", "d", true]
     },
     "tap": {
       "left": ["gui", "z"],
@@ -12,7 +12,7 @@
       "plus": ["", "rightparen"],
       "minus": ["", "leftparen"],
       "1": ["", "l"],
-      "2": ["gui", "d", true]
+      "2": ["", "v"]
     },
     "hold+tap": {
       "b": {
