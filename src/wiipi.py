@@ -200,6 +200,8 @@ class WiiPi:
                         self.load_config(self.configID-1)
                     elif btn == "right":
                         self.load_config(self.configID+1)
+                    elif btn == "2":
+                        print(dir(self.wii))
             elif not self.buttons[btn].holding and self.buttons["home"].holding:
                 if btn == "a":
                     self.led(self.blink)
