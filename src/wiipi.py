@@ -180,12 +180,6 @@ class WiiPi:
     def button_released(self, btn):
         if not self.buttons[btn].holding:
             if not self.remapping:
-                try:
-                    mod, key = self.config["tap"][btn]
-                    keyboard.press([hid[mod]], hid[key])
-                except KeyError as e:
-                    print(e)
-                    print(f"Button Not Mapped: {btn}")
                 if self.buttons["home"].holding:
                     if btn == "a":
                         self.blink = self.leds
@@ -203,6 +197,13 @@ class WiiPi:
                         self.load_config(self.configID+1)
                     elif btn == "2":
                         print(self.wii.close())
+                else:
+                    try:
+                        mod, key = self.config["tap"][btn]
+                        keyboard.press([hid[mod]], hid[key])
+                    except KeyError as e:
+                        print(e)
+                        print(f"Button Not Mapped: {btn}")
             elif not self.buttons[btn].holding and self.buttons["home"].holding:
                 if btn == "a":
                     self.led(self.blink)
