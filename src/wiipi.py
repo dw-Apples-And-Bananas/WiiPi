@@ -201,6 +201,7 @@ class WiiPi:
                 else:
                     try:
                         _map = self.config["tap"][btn]
+                        print(type(_map))
                         mod = ""
                         key = ""
                         if type(_map) == list[list]:
